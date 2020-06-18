@@ -7,6 +7,7 @@
             img(alt="Vue logo" src="./assets/logo.png")
         .row
           .col
+            b-form-input(v-model="searchString" placeholder="Enter package name")
     main.page-content
       .container
         .row
@@ -22,20 +23,7 @@ export default {
   name: "App",
   data() {
     return {
-      items: [
-        {
-          text: "Admin",
-          href: "#"
-        },
-        {
-          text: "Manage",
-          href: "#"
-        },
-        {
-          text: "Library",
-          active: true
-        }
-      ]
+      searchString: ""
     };
   }
 };
