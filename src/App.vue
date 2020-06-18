@@ -1,22 +1,49 @@
-<template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+<template lang="pug">
+  #app
+    header.page-header  
+      .container
+        .row
+          .col
+            img(alt="Vue logo" src="./assets/logo.png")
+        .row
+          .col
+    main.page-content
+      .container
+        .row
+          .col
+    footer.page-footer
+      .container
+        .row
+          .col
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
-
 export default {
   name: "App",
-  components: {
-    HelloWorld
+  data() {
+    return {
+      items: [
+        {
+          text: "Admin",
+          href: "#"
+        },
+        {
+          text: "Manage",
+          href: "#"
+        },
+        {
+          text: "Library",
+          active: true
+        }
+      ]
+    };
   }
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
+@import "~bootstrap/scss/bootstrap";
+@import "~bootstrap-vue/src/index.scss";
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
