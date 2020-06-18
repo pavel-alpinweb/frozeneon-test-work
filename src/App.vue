@@ -22,15 +22,45 @@
                 hover 
                 striped)
                   template(v-slot:cell(show_details)="row")
-                    b-button(size="sm") Details
+                    b-button(size="sm" v-b-modal.modal-1) Details
                   template(v-slot:cell(package.date)="data")
-                    b.text-info {{ data.value | date() }} 
+                    b.text-info {{ data.value | date("date") }} 
               b-pagination.mt-15(
                 v-model="currentPage"
                 :total-rows="rows"
                 :per-page="perPage"
                 aria-controls="results-table")
-
+            
+            b-modal(id="modal-1" title="Details" size="xl" hide-footer)
+              b-jumbotron
+                template(v-slot:header) 
+                  |Name - sass
+                  b-badge.ml-15 1.26.8
+                template(v-slot:lead)
+                  |description - A pure JavaScript implementation of Sass.
+                b-avatar.mr-3
+                b-link(href="#") Natalie Weizenbaum
+                hr.my-4
+                div.keywords
+                  h4 
+                    |Last published: 
+                    b-badge 05.06.2020
+                hr.my-4
+                div.keywords
+                  h4 Keywords:
+                  b-badge.keywords__badge(variant="success") style
+                  b-badge.keywords__badge(variant="success") scss
+                  b-badge.keywords__badge(variant="success") sass
+                  b-badge.keywords__badge(variant="success") preprocessor
+                  b-badge.keywords__badge(variant="success") css
+                hr.my-4
+                div.links
+                  h4 Links:
+                  b-button-group
+                    b-button.links__item(href="#"  variant="danger") npm
+                    b-button.links__item(href="#"  variant="warning") homepage
+                    b-button.links__item(href="#"  variant="info") repository
+                    b-button.links__item(href="#"  variant="dark") bugs
     footer.page-footer
       .container
         .row
@@ -303,5 +333,12 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.keywords__badge {
+  font-size: 16px;
+  margin-right: 10px;
+}
+.links__item {
+  text-transform: uppercase;
 }
 </style>
