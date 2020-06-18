@@ -7,11 +7,14 @@
             img(alt="Vue logo" src="./assets/logo.png")
         .row
           .col
-            b-form-input(v-model="searchString" placeholder="Enter package name")
+            b-form-input.mb-15(v-model="searchString" placeholder="Enter package name")
     main.page-content
       .container
         .row
           .col
+            .overflow-auto
+              b-table.mb-15(:items="items" hover striped :fields="fields")
+              b-pagination()
     footer.page-footer
       .container
         .row
@@ -23,15 +26,69 @@ export default {
   name: "App",
   data() {
     return {
-      searchString: ""
+      searchString: "",
+      fields: [
+        {
+          key: "package.id",
+          sortable: true
+        },
+        {
+          key: "package.first_name",
+          sortable: true
+        },
+        {
+          key: "package.last_name",
+          sortable: false
+        }
+      ],
+      items: [
+        {
+          package: {
+            id: 1,
+            first_name: "Fred",
+            last_name: "Flintstone"
+          }
+        },
+        {
+          package: {
+            id: 1,
+            first_name: "Fred",
+            last_name: "Flintstone"
+          }
+        },
+        {
+          package: {
+            id: 1,
+            first_name: "Fred",
+            last_name: "Flintstone"
+          }
+        },
+        {
+          package: {
+            id: 1,
+            first_name: "Fred",
+            last_name: "Flintstone"
+          }
+        },
+        {
+          package: {
+            id: 1,
+            first_name: "Fred",
+            last_name: "Flintstone"
+          }
+        },
+      ]
     };
+  },
+  computed: {
+    rows() {
+      return this.items.length;
+    }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-@import "~bootstrap/scss/bootstrap";
-@import "~bootstrap-vue/src/index.scss";
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
