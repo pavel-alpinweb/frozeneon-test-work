@@ -1,15 +1,15 @@
 <template lang="pug">
   #app
-    header.page-header.mb-15  
+    header.page-header
       .container
         .row
           .col
             img(alt="Vue logo" src="./assets/logo.png")
         .row
           .col
-            b-form-input(v-model="searchString" placeholder="Enter package name")
+            b-form-input(v-model="searchString" size="lg" placeholder="Enter package name")
 
-    main.page-content.mt-15
+    main.page-content
       .container
         .row
           .col
@@ -20,22 +20,23 @@
                 :per-page="perPage" 
                 :current-page="currentPage" 
                 hover 
+                bordered
                 striped)
                   template(v-slot:cell(show_details)="row")
                     b-button(size="sm" v-b-modal.modal-1) Details
                   template(v-slot:cell(package.date)="data")
                     b.text-info {{ data.value | date("date") }} 
-              b-pagination.mt-15(
-                v-model="currentPage"
-                :total-rows="rows"
-                :per-page="perPage"
-                aria-controls="results-table")
+            b-pagination(
+              v-model="currentPage"
+              :total-rows="rows"
+              :per-page="perPage"
+              aria-controls="results-table")
             
             b-modal(id="modal-1" title="Details" size="xl" hide-footer)
-              b-jumbotron
+              b-jumbotron.packet-window
                 template(v-slot:header) 
                   |Name - sass
-                  b-badge.ml-15 1.26.8
+                  b-badge.packet-window__version 1.26.8
                 template(v-slot:lead)
                   |description - A pure JavaScript implementation of Sass.
                 b-avatar.mr-3
@@ -92,13 +93,8 @@ export default {
           sortable: false
         },
         {
-          key: "package.author.name",
-          label: "Author",
-          sortable: false
-        },
-        {
           key: "package.date",
-          label: "Date",
+          label: "Last published",
           sortable: false
         },
         "show_details"
@@ -340,5 +336,18 @@ export default {
 }
 .links__item {
   text-transform: uppercase;
+}
+.page-header {
+  margin-bottom: 15px;
+}
+.packet-window {
+  @media screen and (max-width: 599px) {
+    h1 {
+      font-size: 36px;
+    }
+  }
+}
+.packet-window__version {
+  margin-left: 15px;
 }
 </style>
