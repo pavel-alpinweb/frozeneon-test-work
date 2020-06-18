@@ -8,13 +8,25 @@
         .row
           .col
             b-form-input.mb-15(v-model="searchString" placeholder="Enter package name")
+            
     main.page-content
       .container
         .row
           .col
             .overflow-auto
-              b-table.mb-15(:items="items" hover striped :fields="fields")
-              b-pagination()
+              b-table#results-table.mb-15(
+                :items="items" 
+                :fields="fields" 
+                :per-page="perPage" 
+                :current-page="currentPage" 
+                hover 
+                striped)
+              b-pagination(
+                v-model="currentPage"
+                :total-rows="rows"
+                :per-page="perPage"
+                aria-controls="results-table")
+
     footer.page-footer
       .container
         .row
@@ -27,6 +39,8 @@ export default {
   data() {
     return {
       searchString: "",
+      perPage: 2,
+      currentPage: 1,
       fields: [
         {
           key: "package.id",
@@ -74,9 +88,9 @@ export default {
           package: {
             id: 1,
             first_name: "Fred",
-            last_name: "Flintstone"
+            last_name: "Simpson"
           }
-        },
+        }
       ]
     };
   },
