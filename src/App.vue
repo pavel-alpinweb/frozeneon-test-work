@@ -15,7 +15,9 @@
           .col
             label(for="to-datepicker") Packages to
             b-form-datepicker(id="to-datepicker" v-model="packagesToDate")
-
+        //- .row
+        //-   .col
+        //-     b-spinner(label="Spinning")
     main.page-content(v-if="packages.length > 0")
       .container
         .row
@@ -69,6 +71,16 @@
       .container
         .row
           .col
+            .app-author
+              img.portret-photo.img-thumbnail(alt="Pavel Photo" src="./assets/profile.jpg")
+              p.h4 Pavel Bezdornov
+        .row.justify-content-md-center
+          .col.col-lg-2
+            p.h6 
+              b-link(href="https://github.com/pavel-alpinweb" target="blank") Author Github
+          .col.col-lg-2
+            p.h6 
+              b-link(href="https://alpinweb.com" target="blank") Author Website
 </template>
 
 <script>
@@ -157,7 +169,9 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 .keywords__badge {
   font-size: 16px;
@@ -169,6 +183,10 @@ export default {
 .page-header {
   margin-bottom: 15px;
 }
+.page-footer {
+  margin-top: auto;
+  padding-bottom: 50px;
+}
 .packet-window {
   @media screen and (max-width: 599px) {
     h1 {
@@ -179,7 +197,10 @@ export default {
 .packet-window__version {
   margin-left: 15px;
 }
-.search-input{
+.search-input {
   margin-bottom: 15px;
+}
+.portret-photo {
+  border-radius: 50%;
 }
 </style>
