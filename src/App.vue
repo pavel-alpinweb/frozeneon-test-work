@@ -7,15 +7,15 @@
             img(alt="Vue logo" src="./assets/logo.png")
         .row
           .col
-            b-form-input(v-model="searchString" size="lg" placeholder="Enter package name")
+            b-form-input(v-model="searchString" @keyup.enter="getPackagesFromApi" size="lg" placeholder="Enter package name")
 
-    main.page-content
+    main.page-content(v-if="packages.length > 0")
       .container
         .row
           .col
             .overflow-auto
               b-table#results-table(
-                :items="items" 
+                :items="packages" 
                 :fields="fields" 
                 :per-page="perPage" 
                 :current-page="currentPage" 
@@ -74,7 +74,7 @@ export default {
   data() {
     return {
       searchString: "",
-      perPage: 5,
+      perPage: 10,
       currentPage: 1,
       fields: [
         {
@@ -98,224 +98,22 @@ export default {
           sortable: false
         },
         "show_details"
-      ],
-      items: [
-        {
-          package: {
-            name: "sass",
-            scope: "unscoped",
-            version: "1.26.8",
-            description: "A pure JavaScript implementation of Sass.",
-            date: "2020-06-05T00:43:04.279Z",
-            author: {
-              name: "Natalie Weizenbaum",
-              email: "nweiz@google.com",
-              url: "https://github.com/nex3"
-            }
-          }
-        },
-        {
-          package: {
-            name: "sass",
-            scope: "unscoped",
-            version: "1.26.8",
-            description: "A pure JavaScript implementation of Sass.",
-            date: "2020-06-05T00:43:04.279Z",
-            author: {
-              name: "Natalie Weizenbaum",
-              email: "nweiz@google.com",
-              url: "https://github.com/nex3"
-            }
-          }
-        },
-        {
-          package: {
-            name: "sass",
-            scope: "unscoped",
-            version: "1.26.8",
-            description: "A pure JavaScript implementation of Sass.",
-            date: "2020-06-05T00:43:04.279Z",
-            author: {
-              name: "Natalie Weizenbaum",
-              email: "nweiz@google.com",
-              url: "https://github.com/nex3"
-            }
-          }
-        },
-        {
-          package: {
-            name: "sass",
-            scope: "unscoped",
-            version: "1.26.8",
-            description: "A pure JavaScript implementation of Sass.",
-            date: "2020-06-05T00:43:04.279Z",
-            author: {
-              name: "Natalie Weizenbaum",
-              email: "nweiz@google.com",
-              url: "https://github.com/nex3"
-            }
-          }
-        },
-        {
-          package: {
-            name: "sass",
-            scope: "unscoped",
-            version: "1.26.8",
-            description: "A pure JavaScript implementation of Sass.",
-            date: "2020-06-05T00:43:04.279Z",
-            author: {
-              name: "Natalie Weizenbaum",
-              email: "nweiz@google.com",
-              url: "https://github.com/nex3"
-            }
-          }
-        },
-        {
-          package: {
-            name: "sass",
-            scope: "unscoped",
-            version: "1.26.8",
-            description: "A pure JavaScript implementation of Sass.",
-            date: "2020-06-05T00:43:04.279Z",
-            author: {
-              name: "Natalie Weizenbaum",
-              email: "nweiz@google.com",
-              url: "https://github.com/nex3"
-            }
-          }
-        },
-        {
-          package: {
-            name: "sass",
-            scope: "unscoped",
-            version: "1.26.8",
-            description: "A pure JavaScript implementation of Sass.",
-            date: "2020-06-05T00:43:04.279Z",
-            author: {
-              name: "Natalie Weizenbaum",
-              email: "nweiz@google.com",
-              url: "https://github.com/nex3"
-            }
-          }
-        },
-        {
-          package: {
-            name: "sass",
-            scope: "unscoped",
-            version: "1.26.8",
-            description: "A pure JavaScript implementation of Sass.",
-            date: "2020-06-05T00:43:04.279Z",
-            author: {
-              name: "Natalie Weizenbaum",
-              email: "nweiz@google.com",
-              url: "https://github.com/nex3"
-            }
-          }
-        },
-        {
-          package: {
-            name: "sass",
-            scope: "unscoped",
-            version: "1.26.8",
-            description: "A pure JavaScript implementation of Sass.",
-            date: "2020-06-05T00:43:04.279Z",
-            author: {
-              name: "Natalie Weizenbaum",
-              email: "nweiz@google.com",
-              url: "https://github.com/nex3"
-            }
-          }
-        },
-        {
-          package: {
-            name: "sass",
-            scope: "unscoped",
-            version: "1.26.8",
-            description: "A pure JavaScript implementation of Sass.",
-            date: "2020-06-05T00:43:04.279Z",
-            author: {
-              name: "Natalie Weizenbaum",
-              email: "nweiz@google.com",
-              url: "https://github.com/nex3"
-            }
-          }
-        },
-        {
-          package: {
-            name: "sass",
-            scope: "unscoped",
-            version: "1.26.8",
-            description: "A pure JavaScript implementation of Sass.",
-            date: "2020-06-05T00:43:04.279Z",
-            author: {
-              name: "Natalie Weizenbaum",
-              email: "nweiz@google.com",
-              url: "https://github.com/nex3"
-            }
-          }
-        },
-        {
-          package: {
-            name: "sass",
-            scope: "unscoped",
-            version: "1.26.8",
-            description: "A pure JavaScript implementation of Sass.",
-            date: "2020-06-05T00:43:04.279Z",
-            author: {
-              name: "Natalie Weizenbaum",
-              email: "nweiz@google.com",
-              url: "https://github.com/nex3"
-            }
-          }
-        },
-        {
-          package: {
-            name: "sass",
-            scope: "unscoped",
-            version: "1.26.8",
-            description: "A pure JavaScript implementation of Sass.",
-            date: "2020-06-05T00:43:04.279Z",
-            author: {
-              name: "Natalie Weizenbaum",
-              email: "nweiz@google.com",
-              url: "https://github.com/nex3"
-            }
-          }
-        },
-        {
-          package: {
-            name: "sass",
-            scope: "unscoped",
-            version: "1.26.8",
-            description: "A pure JavaScript implementation of Sass.",
-            date: "2020-06-05T00:43:04.279Z",
-            author: {
-              name: "Natalie Weizenbaum",
-              email: "nweiz@google.com",
-              url: "https://github.com/nex3"
-            }
-          }
-        },
-        {
-          package: {
-            name: "sass",
-            scope: "unscoped",
-            version: "1.26.8",
-            description: "A pure JavaScript implementation of Sass.",
-            date: "2020-06-05T00:43:04.279Z",
-            author: {
-              name: "Natalie Weizenbaum",
-              email: "nweiz@google.com",
-              url: "https://github.com/nex3"
-            }
-          }
-        }
       ]
     };
   },
   computed: {
     rows() {
-      return this.items.length;
+      return this.$store.state.packages.length;
+    },
+    packages() {
+      return this.$store.state.packages;
+    }
+  },
+  methods: {
+    getPackagesFromApi() {
+      if (this.searchString !== "") {
+        this.$store.dispatch("getAllPackages", this.searchString);
+      }
     }
   }
 };
