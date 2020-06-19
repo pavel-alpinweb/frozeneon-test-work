@@ -8,6 +8,13 @@
         .row
           .col
             b-form-input(v-model="searchString" @keyup.enter="getPackagesFromApi" size="lg" placeholder="Enter package name")
+        .row
+          .col
+            label(for="from-datepicker") Packages from
+            b-form-datepicker(id="from-datepicker" v-model="packagesFromDate")
+          .col
+            label(for="to-datepicker") Packages to
+            b-form-datepicker(id="to-datepicker" v-model="packagesToDate")
 
     main.page-content(v-if="packages.length > 0")
       .container
@@ -70,9 +77,11 @@ export default {
   data() {
     return {
       searchString: "",
-      perPage: 10,
+      perPage: 5,
       currentPage: 1,
       currentPackage: {},
+      packagesFromDate: "",
+      packagesToDate: "",
       fields: [
         {
           key: "package.name",
@@ -100,10 +109,10 @@ export default {
   },
   computed: {
     rows() {
-      return this.$store.state.packages.length;
+      return this.packages.length;
     },
     packages() {
-      return this.$store.state.packages;
+      return this.filterTradeByDate(this.$store.state.packages);
     }
   },
   methods: {
@@ -114,6 +123,28 @@ export default {
     },
     showDetails(row) {
       this.currentPackage = row.item.package;
+    },
+    filterTradeByDate(array) {
+      let filtredArray = array;
+      if (this.packagesFromDate !== "") {
+        const fromDate = new Date(this.packagesFromDate);
+        filtredArray = array.filter(item => {
+          const itemDate = new Date(item.package.date);
+          if (itemDate >= fromDate) {
+            return item;
+          }
+        });
+      }
+      if (this.packagesToDate !== "") {
+        const toDate = new Date(this.packagesToDate);
+        filtredArray = filtredArray.filter(item => {
+          const itemDate = new Date(item.package.date);
+          if (itemDate <= toDate) {
+            return item;
+          }
+        });
+      }
+      return filtredArray;
     }
   }
 };
