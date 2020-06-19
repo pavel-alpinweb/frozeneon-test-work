@@ -7,7 +7,7 @@
             img(alt="Vue logo" src="./assets/logo.png")
         .row
           .col
-            b-form-input(v-model="searchString" @keyup.enter="getPackagesFromApi" size="lg" placeholder="Enter package name")
+            b-form-input.search-input(v-model="searchString" @keyup.enter="getPackagesFromApi" size="lg" placeholder="Enter package name")
         .row
           .col
             label(for="from-datepicker") Packages from
@@ -77,7 +77,7 @@ export default {
   data() {
     return {
       searchString: "",
-      perPage: 5,
+      perPage: 10,
       currentPage: 1,
       currentPackage: {},
       packagesFromDate: "",
@@ -178,5 +178,8 @@ export default {
 }
 .packet-window__version {
   margin-left: 15px;
+}
+.search-input{
+  margin-bottom: 15px;
 }
 </style>
