@@ -25,6 +25,14 @@
       .container
         .row
           .col
+            p.h4 Sort by:
+            b-button-group.sorting
+              b-button(@click="sortOption='base'" ) Base
+              b-button(@click="sortOption='quality'" variant="success") Quality
+              b-button(@click="sortOption='popularity'" variant="info") Popularity
+              b-button(@click="sortOption='maintenance'" variant="warning") Maintenance
+        .row
+          .col
             .overflow-auto
               b-table#results-table(
                 :items="packages" 
@@ -75,6 +83,7 @@ export default {
       isLoading: false,
       isNotFound: false,
       searchString: "",
+      sortOption: "base",
       perPage: 10,
       currentPage: 1,
       currentPackage: {},
@@ -110,12 +119,18 @@ export default {
       return this.packages.length;
     },
     packages() {
-      return this.filterTradeByDate(this.$store.state.packages);
+      const sortArray = this.sortArray(
+        this.$store.state.packages,
+        this.sortOption
+      );
+      const filteredArrayByDate = this.filterArrayByDate(sortArray);
+      return filteredArrayByDate;
     }
   },
   mounted() {
     this.$eventBus.$on("endLoading", data => {
       this.isLoading = data.isLoading;
+      this.sortOption = data.sortOption;
       if (this.packages.length === 0) {
         this.isNotFound = true;
       } else {
@@ -142,7 +157,17 @@ export default {
     showDetails(row) {
       this.currentPackage = row.item.package;
     },
-    filterTradeByDate(array) {
+    sortArray(array, option) {
+      if (option === "base") {
+        return array.sort((a, b) => {
+          return b.searchScore - a.searchScore;
+        });
+      }
+      return array.sort((a, b) => {
+        return b.score.detail[option] - a.score.detail[option];
+      });
+    },
+    filterArrayByDate(array) {
       let filtredArray = array;
       if (this.packagesFromDate !== "") {
         const fromDate = new Date(this.packagesFromDate);
@@ -207,5 +232,8 @@ export default {
 }
 .results-alert {
   margin-top: 15px;
+}
+.sorting {
+  margin-bottom: 15px;
 }
 </style>

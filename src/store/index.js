@@ -21,7 +21,8 @@ export default new Vuex.Store({
         const json = await response.json();
         store.commit("updatePackages", json.objects);
         eventBus.$emit("endLoading", {
-          isLoading: false
+          isLoading: false,
+          sortOption: "base"
         });
       } catch (error) {
         console.error(error);
