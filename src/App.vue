@@ -41,32 +41,8 @@
               :per-page="perPage"
               aria-controls="results-table")
             
-            b-modal(id="my-modal" title="Details" size="xl" hide-footer, v-if="currentPackage.name")
-              b-jumbotron.packet-window
-                template(v-slot:header) 
-                  |{{ currentPackage.name }}
-                  b-badge.packet-window__version {{ currentPackage.version }}
-                template(v-slot:lead) {{ currentPackage.description }}
-                b-avatar.mr-3
-                b-link(:href="currentPackage.author.url" target="blank") {{ currentPackage.author.name }}
-                hr.my-4
-                div.keywords
-                  h4 
-                    |Last published: 
-                    b-badge {{ currentPackage.date | date("date") }}
-                hr.my-4
-                div.keywords
-                  h4 Keywords:
-                  b-badge.keywords__badge(variant="success" v-for="item in currentPackage.keywords") {{ item }}
-                hr.my-4
-                div.links
-                  h4 Links:
-                  b-button-group
-                    b-button.links__item(:href="currentPackage.links.npm" target="blank"  variant="danger") npm
-                    b-button.links__item(:href="currentPackage.links.homepage" target="blank"  variant="warning") homepage
-                    b-button.links__item(:href="currentPackage.links.repository" target="blank"  variant="info") repository
-                    b-button.links__item(:href="currentPackage.links.bugs" target="blank"  variant="dark") bugs
-
+            b-modal(id="my-modal" title="Details" size="xl" hide-footer)
+              Package(:currentPackage="currentPackage")
     footer.page-footer
       .container
         .row
@@ -84,8 +60,13 @@
 </template>
 
 <script>
+import Package from "./components/package";
+
 export default {
   name: "App",
+  components: {
+    Package
+  },
   data() {
     return {
       searchString: "",
@@ -173,29 +154,12 @@ export default {
   flex-direction: column;
   min-height: 100vh;
 }
-.keywords__badge {
-  font-size: 16px;
-  margin-right: 10px;
-}
-.links__item {
-  text-transform: uppercase;
-}
 .page-header {
   margin-bottom: 15px;
 }
 .page-footer {
   margin-top: auto;
   padding-bottom: 50px;
-}
-.packet-window {
-  @media screen and (max-width: 599px) {
-    h1 {
-      font-size: 36px;
-    }
-  }
-}
-.packet-window__version {
-  margin-left: 15px;
 }
 .search-input {
   margin-bottom: 15px;
