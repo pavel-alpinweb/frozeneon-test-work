@@ -111,8 +111,16 @@ export default {
   },
   mounted() {
     this.$eventBus.$on("endLoading", data => {
-      console.log(data);
       this.isLoading = data.isLoading;
+    });
+    this.$eventBus.$on("showMessage", data => {
+      this.isLoading = data.isLoading;
+      this.$bvToast.toast(data.text, {
+        title: "Message:",
+        variant: data.variant,
+        autoHideDelay: 5000,
+        solid: true
+      });
     });
   },
   methods: {

@@ -24,7 +24,12 @@ export default new Vuex.Store({
           isLoading: false
         });
       } catch (error) {
-        console.log(error);
+        console.error(error);
+        eventBus.$emit("showMessage", {
+          isLoading: false,
+          variant: "danger",
+          text: "Server error"
+        });
       }
     }
   },
