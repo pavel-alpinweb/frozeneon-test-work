@@ -29,7 +29,7 @@ export default new Vuex.Store({
         eventBus.$emit("showMessage", {
           isLoading: false,
           variant: "danger",
-          text: "Server error"
+          text: "Request error"
         });
       }
     }
