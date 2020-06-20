@@ -5,6 +5,7 @@
         .row
           .col
             img(alt="Vue logo" src="./assets/logo.png")
+            h1.h1.page-title App for search of npm packages
         .row
           .col
             b-form-input.search-input(v-model="searchString" @keyup.enter="getPackagesFromApi" size="lg" placeholder="Enter package name")
@@ -64,10 +65,10 @@
         .row.justify-content-md-center
           .col.col-lg-2
             p.h6 
-              b-link(href="https://github.com/pavel-alpinweb" target="blank") Author Github
+              b-link(href="https://github.com/pavel-alpinweb" target="blank") Author's Github
           .col.col-lg-2
             p.h6 
-              b-link(href="https://alpinweb.com" target="blank") Author Website
+              b-link(href="https://alpinweb.com" target="blank") Author's Website
 </template>
 
 <script>
@@ -213,6 +214,9 @@ export default {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+.page-title {
+  text-transform: uppercase;
 }
 .page-header {
   margin-bottom: 15px;
