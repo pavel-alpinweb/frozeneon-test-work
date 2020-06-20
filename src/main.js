@@ -20,6 +20,7 @@ Vue.filter("date", dateFilter);
 Vue.config.productionTip = false;
 Vue.use(BootstrapVue);
 Vue.use(IconsPlugin);
+Vue.prototype.$eventBus = new Vue(); // Global event bus
 
 new Vue({
   store,
