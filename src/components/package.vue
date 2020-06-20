@@ -14,7 +14,7 @@
     hr.my-4
     div.keywords
       h4 Keywords:
-      b-badge.keywords__badge(variant="success" v-for="item in currentPackage.keywords") {{ item }}
+      b-badge.keywords__badge(variant="success" v-for="(item, index) in currentPackage.keywords" :key="index") {{ item }}
     hr.my-4
     div.links
       h4 Links:
@@ -37,8 +37,9 @@ export default {
 
 <style lang="scss" scoped>
 .packet-window {
-  @media screen and (max-width: 599px) {
-    h1 {
+  h1 {
+    font-size: 48px;
+    @media screen and (max-width: 599px) {
       font-size: 36px;
     }
   }

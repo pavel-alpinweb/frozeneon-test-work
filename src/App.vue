@@ -8,7 +8,7 @@
             h1.h1.page-title App for search of npm packages
         .row
           .col
-            b-form-input.search-input(v-model="searchString" @keyup.enter="getPackagesFromApi" size="lg" placeholder="Enter package name")
+            b-form-input.search-input(v-model="searchString" @keyup.enter="getPackagesFromApi" size="lg" placeholder="Enter package name or keyword")
         .row
           .col
             label(for="from-datepicker") Packages from
