@@ -12,10 +12,10 @@
         .row
           .col
             label(for="from-datepicker") Packages from
-            b-form-datepicker(id="from-datepicker" v-model="packagesFromDate")
+            b-form-datepicker(id="from-datepicker" v-model="packagesFromDate" reset-button)
           .col
             label(for="to-datepicker") Packages to
-            b-form-datepicker(id="to-datepicker" v-model="packagesToDate")
+            b-form-datepicker(id="to-datepicker" v-model="packagesToDate" reset-button)
         .row(v-if="isLoading")
           .col
             b-spinner.spinner(label="Spinning")
