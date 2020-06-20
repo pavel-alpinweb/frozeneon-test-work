@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import { eventBus } from "../main";
 
 Vue.use(Vuex);
 
@@ -19,6 +20,9 @@ export default new Vuex.Store({
           ${searchString}`);
         const json = await response.json();
         store.commit("updatePackages", json.objects);
+        eventBus.$emit("endLoading", {
+          isLoading: false
+        });
       } catch (error) {
         console.log(error);
       }

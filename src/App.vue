@@ -15,10 +15,10 @@
           .col
             label(for="to-datepicker") Packages to
             b-form-datepicker(id="to-datepicker" v-model="packagesToDate")
-        //- .row
-        //-   .col
-        //-     b-spinner(label="Spinning")
-    main.page-content(v-if="packages.length > 0")
+        .row(v-if="isLoading")
+          .col
+            b-spinner.spinner(label="Spinning")
+    main.page-content(v-if="packages.length > 0 && !isLoading")
       .container
         .row
           .col
@@ -69,6 +69,7 @@ export default {
   },
   data() {
     return {
+      isLoading: false,
       searchString: "",
       perPage: 10,
       currentPage: 1,
@@ -108,9 +109,16 @@ export default {
       return this.filterTradeByDate(this.$store.state.packages);
     }
   },
+  mounted() {
+    this.$eventBus.$on("endLoading", data => {
+      console.log(data);
+      this.isLoading = data.isLoading;
+    });
+  },
   methods: {
     getPackagesFromApi() {
       if (this.searchString !== "") {
+        this.isLoading = true;
         this.$store.dispatch("getAllPackages", this.searchString);
       }
     },
@@ -166,5 +174,8 @@ export default {
 }
 .portret-photo {
   border-radius: 50%;
+}
+.spinner {
+  margin-top: 15px;
 }
 </style>
