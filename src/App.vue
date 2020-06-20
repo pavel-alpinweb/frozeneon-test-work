@@ -18,6 +18,9 @@
         .row(v-if="isLoading")
           .col
             b-spinner.spinner(label="Spinning")
+        .row(v-if="isNotFound && !isLoading")
+          .col 
+            b-alert.results-alert(variant="warning" show) Not Found
     main.page-content(v-if="packages.length > 0 && !isLoading")
       .container
         .row
@@ -70,6 +73,7 @@ export default {
   data() {
     return {
       isLoading: false,
+      isNotFound: false,
       searchString: "",
       perPage: 10,
       currentPage: 1,
@@ -112,6 +116,11 @@ export default {
   mounted() {
     this.$eventBus.$on("endLoading", data => {
       this.isLoading = data.isLoading;
+      if (this.packages.length === 0) {
+        this.isNotFound = true;
+      } else {
+        this.isNotFound = false;
+      }
     });
     this.$eventBus.$on("showMessage", data => {
       this.isLoading = data.isLoading;
@@ -143,6 +152,11 @@ export default {
             return item;
           }
         });
+        if (filtredArray.length === 0) {
+          this.isNotFound = true;
+        } else {
+          this.isNotFound = false;
+        }
       }
       if (this.packagesToDate !== "") {
         const toDate = new Date(this.packagesToDate);
@@ -152,6 +166,11 @@ export default {
             return item;
           }
         });
+        if (filtredArray.length === 0) {
+          this.isNotFound = true;
+        } else {
+          this.isNotFound = false;
+        }
       }
       return filtredArray;
     }
@@ -184,6 +203,9 @@ export default {
   border-radius: 50%;
 }
 .spinner {
+  margin-top: 15px;
+}
+.results-alert {
   margin-top: 15px;
 }
 </style>
