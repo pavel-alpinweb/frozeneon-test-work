@@ -44,7 +44,7 @@
                 bordered
                 striped)
                   template(v-slot:cell(show_details)="row")
-                    b-button(size="sm" v-b-modal.my-modal @click="showDetails(row)") Details
+                    b-button(size="sm" @click="showDetails(row)") Details
                   template(v-slot:cell(package.date)="data")
                     b.text-info {{ data.value | date("date") }}
             b-pagination(
@@ -53,8 +53,8 @@
               :per-page="perPage"
               aria-controls="results-table")
             
-            b-modal(id="my-modal" title="Details" size="xl" hide-footer)
-              Package(:currentPackage="currentPackage")
+            
+            Package
     footer.page-footer
       .container
         .row
@@ -87,7 +87,6 @@ export default {
       sortOption: "base",
       perPage: 10,
       currentPage: 1,
-      currentPackage: {},
       packagesFromDate: "",
       packagesToDate: "",
       fields: [
@@ -120,12 +119,21 @@ export default {
       return this.packages.length;
     },
     packages() {
-      const sortArray = this.sortArray(
+      const sortArray = this.sortArrayByScore(
         this.$store.state.packages,
         this.sortOption
       );
       const filteredArrayByDate = this.filterArrayByDate(sortArray);
       return filteredArrayByDate;
+    }
+  },
+  watch: {
+    packages() {
+      if (this.packages.length === 0) {
+        this.isNotFound = true;
+      } else {
+        this.isNotFound = false;
+      }
     }
   },
   mounted() {
@@ -156,9 +164,12 @@ export default {
       }
     },
     showDetails(row) {
-      this.currentPackage = row.item.package;
+      this.$eventBus.$emit("showDetails", {
+        currentPackage: row.item.package,
+        isVisible: true
+      });
     },
-    sortArray(array, option) {
+    sortArrayByScore(array, option) {
       if (option === "base") {
         return array.sort((a, b) => {
           return b.searchScore - a.searchScore;
@@ -178,11 +189,6 @@ export default {
             return item;
           }
         });
-        if (filtredArray.length === 0) {
-          this.isNotFound = true;
-        } else {
-          this.isNotFound = false;
-        }
       }
       if (this.packagesToDate !== "") {
         const toDate = new Date(this.packagesToDate);
@@ -192,11 +198,6 @@ export default {
             return item;
           }
         });
-        if (filtredArray.length === 0) {
-          this.isNotFound = true;
-        } else {
-          this.isNotFound = false;
-        }
       }
       return filtredArray;
     }
