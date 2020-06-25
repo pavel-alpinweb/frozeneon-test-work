@@ -1,5 +1,5 @@
 <template lang="pug">
-  b-modal(ref="detail-modal" title="Details" size="xl" hide-footer)
+  b-modal(title="Details" size="xl" hide-footer v-model="isVisible")
     b-jumbotron.packet-window(v-if="isVisible")
       template(v-slot:header) 
         |{{ currentPackage.name }}
@@ -38,7 +38,7 @@ export default {
     this.$eventBus.$on("showDetails", data => {
       this.currentPackage = data.currentPackage;
       this.isVisible = data.isVisible;
-      this.$refs["detail-modal"].show();
+      // this.$refs["detail-modal"].show();
     });
     this.$root.$on("bv::modal::hide", () => {
       this.isVisible = false;
