@@ -18,7 +18,7 @@
     hr.my-4
     div.links
       h4 Links:
-      b-button-group
+      b-button-group.link__group
         b-button.links__item(:href="currentPackage.links.npm" target="blank"  variant="danger") npm
         b-button.links__item(:href="currentPackage.links.homepage" target="blank"  variant="warning") homepage
         b-button.links__item(:href="currentPackage.links.repository" target="blank"  variant="info") repository
@@ -53,5 +53,8 @@ export default {
 }
 .links__item {
   text-transform: uppercase;
+}
+.link__group {
+  flex-wrap: wrap;
 }
 </style>
